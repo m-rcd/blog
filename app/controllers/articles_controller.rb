@@ -1,19 +1,24 @@
 class ArticlesController < ApplicationController
   def index
     @articles = Article.all
-  end 
+  end
 
   def show
     @article = Article.find(params[:id])
   end
 
   def new
+    @article = Article.new
   end
 
   def create
     @article = Article.new(particle_params)
-    @article.save #save model in db/ will return boolean to say if saved or not
-    redirect_to @article #redirect user to show action
+    if @article.save
+      redirect_to @article #redirect user to show action
+    else
+      render 'new'
+    end
+    #@article.save #save model in db/ will return boolean to say if saved or not
   end
 
   private
